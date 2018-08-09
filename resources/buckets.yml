@@ -28,6 +28,9 @@ Resources:
           HostName: ${self:custom.dn}
             #Fn::GetAtt: [RootCloudFront, DomainName]
 Outputs:
-  WebsiteBucketName:
+  WebsiteBucketURL:
     Value:
-      Ref: WebsiteBucket
+      Fn::GetAtt: [WebsiteBucket, WebsiteURL]
+  RedirectBucketURL:
+    Value:
+      Fn::GetAtt: [RedirectBucket, WebsiteURL]
