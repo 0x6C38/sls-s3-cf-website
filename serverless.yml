@@ -6,7 +6,7 @@ custom:
     dn: "bananananananananana-5435434y653.net"
     dnwww: www.${self:custom.dn}
     bn: ${self:custom.nm}-bucket-website
-
+    rbn: ${self:custom.bn}-redirect
 
 provider:
   name: aws
