@@ -10,6 +10,7 @@ custom:
     cfn: ${self:custom.nm}-website-cf
     rcfn: ${self:custom.cfn}-redirect
     certArn: "arn:aws:acm:us-east-1:061469306819:certificate/14109a34-9f8f-4144-be49-bd6eaf8b4344"
+    hzId: "Z20C7FJOX8RFEV"
 
 provider:
   name: aws

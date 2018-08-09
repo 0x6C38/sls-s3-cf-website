@@ -1,0 +1,31 @@
+Resources:     
+   DNSRecords:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId:
+        Ref: WsHostedZone
+      RecordSets:
+      - Name: ${self:custom.dn}
+        Type: A
+        AliasTarget:
+          HostedZoneId: ${self:custom.hzId}
+          DNSName:
+            Fn::GetAtt: [RootCloudFront, DomainName]
+      - Name: ${self:custom.dn}
+        Type: AAAA
+        AliasTarget:
+          HostedZoneId: ${self:custom.hzId}
+          DNSName:
+            Fn::GetAtt: [RootCloudFront, DomainName]
+      - Name: ${self:custom.dnwww}
+        Type: A
+        AliasTarget:
+          HostedZoneId: ${self:custom.hzId}
+          DNSName:
+            Fn::GetAtt: [RedirectCloudFront, DomainName]
+      - Name: ${self:custom.dnwww}
+        Type: AAAA
+        AliasTarget:
+          HostedZoneId: ${self:custom.hzId}
+          DNSName:
+            Fn::GetAtt: [RedirectCloudFront, DomainName]
