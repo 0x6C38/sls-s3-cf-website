@@ -6,6 +6,19 @@ Resources:
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: index.html
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource:
+              Fn::Join: ["", [Fn::GetAtt: [WebsiteBucket, Arn], "/*"] ]
+      Bucket:
+        Ref: WebsiteBucket
 Outputs:
   WebsiteBucketName:
     Value:
