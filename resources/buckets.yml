@@ -19,6 +19,14 @@ Resources:
               Fn::Join: ["", [Fn::GetAtt: [WebsiteBucket, Arn], "/*"] ]
       Bucket:
         Ref: WebsiteBucket
+  RedirectBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:custom.rbn}
+      WebsiteConfiguration:
+        RedirectAllRequestsTo:
+          HostName: ${self:custom.dn}
+            #Fn::GetAtt: [RootCloudFront, DomainName]
 Outputs:
   WebsiteBucketName:
     Value:
