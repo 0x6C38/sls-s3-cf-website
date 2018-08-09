@@ -1,6 +1,12 @@
 service: sls-s3-cf-react-website
 
 # frameworkVersion: "=X.X.X"
+custom:
+    nm: "bananananananananana-5435434y653"
+    dn: "bananananananananana-5435434y653.net"
+    dnwww: www.${self:custom.dn}
+    bn: ${self:custom.nm}-bucket-website
+
 
 provider:
   name: aws

@@ -2,11 +2,11 @@ Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: "test43543543-5t436543y534y54"
+      BucketName: ${self:custom.bn}
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: index.html
-# Outputs:
-#   WebsiteBucketName:
-#     Value:
-#       Ref: WebsiteBucket
+Outputs:
+  WebsiteBucketName:
+    Value:
+      Ref: WebsiteBucket
