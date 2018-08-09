@@ -11,7 +11,7 @@ provider:
 #    - exclude-me-dir/**
 
 resources:
-  Resources:
+  - ${file(resources/buckets.yml)}
 #    NewResource:
 #      Type: AWS::S3::Bucket
 #      Properties:
