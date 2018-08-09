@@ -1,0 +1,56 @@
+Resources:
+  RootCloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        HttpVersion: http2
+        Origins:
+          - DomainName:
+              Fn::Select: [ 2, Fn::Split: ["/", Fn::GetAtt: [WebsiteBucket, WebsiteURL]]]
+            Id: ${self:custom.cfn}
+            CustomOriginConfig:
+              HTTPPort: '80'
+              HTTPSPort: '443'
+              OriginProtocolPolicy: http-only
+        DefaultCacheBehavior:
+          Compress: true
+          ForwardedValues:
+            QueryString: false
+          TargetOriginId: ${self:custom.cfn}
+          ViewerProtocolPolicy: redirect-to-https
+        CustomErrorResponses:
+          - ErrorCachingMinTTL: 300
+            ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: "/index.html"
+        Aliases:
+          - ${self:custom.dn}
+        ViewerCertificate:
+          AcmCertificateArn: ${self:custom.certArn}
+          SslSupportMethod: sni-only
+  RedirectCloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        HttpVersion: http2
+        Origins:
+          - DomainName:
+              Fn::Select: [ 2, Fn::Split: ["/", Fn::GetAtt: [RedirectBucket, WebsiteURL]]]
+            Id: ${self:custom.rcfn}
+            CustomOriginConfig:
+              HTTPPort: '80'
+              HTTPSPort: '443'
+              OriginProtocolPolicy: http-only
+        DefaultCacheBehavior:
+          ForwardedValues:
+            QueryString: false
+          TargetOriginId: ${self:custom.rcfn}
+
+          ViewerProtocolPolicy: allow-all
+        Aliases:
+          - ${self:custom.dnwww}
+        ViewerCertificate:
+          AcmCertificateArn: ${self:custom.certArn}
+          SslSupportMethod: sni-only
