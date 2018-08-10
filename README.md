@@ -8,6 +8,8 @@ Each piece of infrastructure is declared in a separate file inside of the `/reso
 - 2 Cloudfront Distributions (1 for the root domain, 1 for redirecting `.www`)
 - DNS A and AAAA records from the root domain and the `www` domain to cloudfront
 
+Unfortunately there is no way to provision an ssl certificate and autoverify it using cloudformation so a few things need to be configured manually as explained in the setup section.
+
 ## Requirements
 - Have nodejs v8.10+ and npm installed
 - Have serverless framework installed (`npm install -g serverless`)
