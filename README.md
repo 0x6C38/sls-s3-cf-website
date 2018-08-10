@@ -20,15 +20,15 @@ Unfortunately there is no way to provision an ssl certificate and autoverify it 
 1. Clone this repository
 2. Install the dependencies (`npm install`)
 3. Register a domain name on AWS using Route53.
-4. Issue a certificate for `example.com` and `www.example.com` using ACM,
+4. Issue a certificate for `example.com` and `www.example.com` using ACM.
 5. Have the certificate verified by creating DNS records on Route53 using ACM.
-6. Go into `serverless.yml` and change `nm` and `dn` to match your domain the `custom` section.
-7. Change `certArn` to your certificate's ARN which can be found on the ACM console.
+6. Go into `serverless.yml` and change `nm` and `dn` to match your domain in the `custom` variables section.
+7. Change `certArn` to your certificate's ARN which can be found in the ACM console.
 8. Change `dhzId` to the Hosted Zone ID which Route53 created for you when you registered the domain.
-9. Deploy the infrastructure using `serverless deploy --verbose` and wait until it's finished which should be aprox. 20 min because of cloudfront.
+9. Deploy the infrastructure using `serverless deploy --verbose` and wait until it's finished (which should take aprox. 20 min because of cloudfront).
 
 ### Using a different Registrar
-In case you prefer to use a registrar that isn't amazon for registering your domain name, steps 4 to 9 still apply but you need to create a hosted zone for your domain manually. You can do that by adding the following to the resources section in `DNS-config.yml`:
+In case you prefer to use a registrar that isn't amazon, steps 4 to 9 still apply but you need to create a hosted zone for your domain manually. You can do that by adding the following to the resources section in `DNS-config.yml`:
 
 ```
 Resources:
