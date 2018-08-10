@@ -2,11 +2,11 @@
 This repository contains infrastructure code for hosting a static website on AWS using Serverless Framework. The website is served using an S3 bucket and cached using cloudfront. This approach doesn't require any servers and can serve millions of users without a problem.
 
 ## Architecture
-Each piece of infrastructure is declared in a separate file in the `/resources` directory. The `serverless.yml` file centralizes all resources, including:
+Each piece of infrastructure is declared in a separate file inside of the `/resources` directory. The `serverless.yml` file centralizes all resources, including:
 
 - 2 S3 Buckets (1 for the static files, 1 for redirecting `.www`)
-- 2 Cloudfront Distributions (1 for the root, 1 for redirecting `.www`)
-- DNS A and AAAA records from the base domain and the `www` domain to cloudfront
+- 2 Cloudfront Distributions (1 for the root domain, 1 for redirecting `.www`)
+- DNS A and AAAA records from the root domain and the `www` domain to cloudfront
 
 ## Requirements
 - Have nodejs v8.10+ and npm installed
@@ -58,7 +58,9 @@ The commands should look as follows:
 
 ```
 VanillaUploadCommand: aws s3 sync website/ s3://example-bucket-website --delete && aws cloudfront create-invalidation --distribution-id ZZZZZZZZZZZZ --paths '/*' && aws cloudfront create-invalidation --distribution-id XXXXXXXXXXXX --paths '/*'
+```
 
+```
 ReactUploadCommand: (cd ./website && npm run build) && aws s3 sync website/build/ s3://example-bucket-website --delete && aws cloudfront create-invalidation --distribution-id ZZZZZZZZZZZZ --paths '/*' && aws cloudfront create-invalidation --distribution-id XXXXXXXXXXXX --paths '/*'
 ```
 
