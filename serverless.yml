@@ -24,4 +24,3 @@ resources:
   - ${file(resources/cloudfront-distributions.yml)}
   - ${file(resources/DNS-config.yml)}
   - ${file(resources/upload-cmds.yml)}
-
