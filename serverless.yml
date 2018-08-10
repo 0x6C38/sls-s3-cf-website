@@ -1,6 +1,5 @@
 service: sls-s3-cf-react-website
 
-# frameworkVersion: "=X.X.X"
 custom:
     nm: "ds-labs"
     dn: "ds-labs.xyz"
@@ -16,9 +15,9 @@ provider:
   name: aws
   runtime: nodejs8.10
 
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+package:
+  exclude:
+    - website/**
 
 resources:
   - ${file(resources/buckets.yml)}
