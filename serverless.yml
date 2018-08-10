@@ -1,15 +1,15 @@
 service: sls-s3-cf-react-website
 
 custom:
-    nm: "ds-labs"
-    dn: "ds-labs.xyz"
+    nm: "example"
+    dn: "example.com"
     dnwww: www.${self:custom.dn}
     bn: ${self:custom.nm}-bucket-website
     rbn: ${self:custom.bn}-redirect
     cfn: ${self:custom.nm}-website-cf
     rcfn: ${self:custom.cfn}-redirect
-    certArn: "arn:aws:acm:us-east-1:061469306819:certificate/14109a34-9f8f-4144-be49-bd6eaf8b4344"
-    dhzId: "Z20C7FJOX8RFEV"
+    certArn: "REPLACE_WITH_CERT_ARN_FROM_ACM"
+    dhzId: "REPLACE_WITH_HOSTED_ZONE_ID_FOR_THE_DOMAIN"
 
 provider:
   name: aws
