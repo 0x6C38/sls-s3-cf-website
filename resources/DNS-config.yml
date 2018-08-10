@@ -2,30 +2,31 @@ Resources:
    DNSRecords:
     Type: AWS::Route53::RecordSetGroup
     Properties:
-      HostedZoneId:
-        Ref: WsHostedZone
+      HostedZoneId: ${self:custom.dhzId}
       RecordSets:
       - Name: ${self:custom.dn}
         Type: A
         AliasTarget:
-          HostedZoneId: ${self:custom.hzId}
+          HostedZoneId: Z2FDTNDATAQYW2
           DNSName:
             Fn::GetAtt: [RootCloudFront, DomainName]
       - Name: ${self:custom.dn}
         Type: AAAA
         AliasTarget:
-          HostedZoneId: ${self:custom.hzId}
+          HostedZoneId: Z2FDTNDATAQYW2
           DNSName:
             Fn::GetAtt: [RootCloudFront, DomainName]
       - Name: ${self:custom.dnwww}
         Type: A
         AliasTarget:
-          HostedZoneId: ${self:custom.hzId}
+          HostedZoneId: Z2FDTNDATAQYW2
           DNSName:
             Fn::GetAtt: [RedirectCloudFront, DomainName]
       - Name: ${self:custom.dnwww}
         Type: AAAA
         AliasTarget:
-          HostedZoneId: ${self:custom.hzId}
+          HostedZoneId: Z2FDTNDATAQYW2
           DNSName:
             Fn::GetAtt: [RedirectCloudFront, DomainName]
+
+# The HostedZoneId for ANY cloudfront distribution is ALWAYS Z2FDTNDATAQYW2.

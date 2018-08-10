@@ -2,15 +2,15 @@ service: sls-s3-cf-react-website
 
 # frameworkVersion: "=X.X.X"
 custom:
-    nm: "bananananananananana-5435434y653"
-    dn: "bananananananananana-5435434y653.net"
+    nm: "ds-labs"
+    dn: "ds-labs.xyz"
     dnwww: www.${self:custom.dn}
     bn: ${self:custom.nm}-bucket-website
     rbn: ${self:custom.bn}-redirect
     cfn: ${self:custom.nm}-website-cf
     rcfn: ${self:custom.cfn}-redirect
     certArn: "arn:aws:acm:us-east-1:061469306819:certificate/14109a34-9f8f-4144-be49-bd6eaf8b4344"
-    hzId: "Z20C7FJOX8RFEV"
+    dhzId: "Z20C7FJOX8RFEV"
 
 provider:
   name: aws
@@ -22,11 +22,5 @@ provider:
 
 resources:
   - ${file(resources/buckets.yml)}
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+  - ${file(resources/cloudfront-distributions.yml)}
+  - ${file(resources/DNS-config.yml)}

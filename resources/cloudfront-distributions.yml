@@ -47,7 +47,6 @@ Resources:
           ForwardedValues:
             QueryString: false
           TargetOriginId: ${self:custom.rcfn}
-
           ViewerProtocolPolicy: allow-all
         Aliases:
           - ${self:custom.dnwww}
