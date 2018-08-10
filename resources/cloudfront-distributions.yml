@@ -53,3 +53,11 @@ Resources:
         ViewerCertificate:
           AcmCertificateArn: ${self:custom.certArn}
           SslSupportMethod: sni-only
+
+Outputs:
+  CloudFrontDistributionURL:
+    Value:
+      Fn::GetAtt: [WebsiteBucket, WebsiteURL]
+  RedirectCloudFrontDistributionURL:
+    Value:
+      Fn::GetAtt: [RedirectBucket, WebsiteURL]
