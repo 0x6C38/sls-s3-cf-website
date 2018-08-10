@@ -62,3 +62,26 @@ typings/
 
 # Serverless directories
 .serverless
+
+
+# Nested Website Directory
+# dependencies
+website/node_modules
+website/jspm_packages
+
+# testing
+website/coverage
+
+# production
+website/build
+
+# misc
+website/.DS_Store
+website/.env.local
+website/.env.development.local
+website/.env.test.local
+website/.env.production.local
+
+website/npm-debug.log*
+website/yarn-debug.log*
+website/yarn-error.log*
