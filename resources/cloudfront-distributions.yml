@@ -57,7 +57,7 @@ Resources:
 Outputs:
   CloudFrontDistributionURL:
     Value:
-      Fn::GetAtt: [WebsiteBucket, WebsiteURL]
+      Fn::GetAtt: [RootCloudFront, DomainName]
   RedirectCloudFrontDistributionURL:
     Value:
-      Fn::GetAtt: [RedirectBucket, WebsiteURL]
+      Fn::GetAtt: [RedirectCloudFront, DomainName]
