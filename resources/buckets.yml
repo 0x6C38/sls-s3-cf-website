@@ -26,7 +26,6 @@ Resources:
       WebsiteConfiguration:
         RedirectAllRequestsTo:
           HostName: ${self:custom.dn}
-            #Fn::GetAtt: [RootCloudFront, DomainName]
 Outputs:
   WebsiteBucketURL:
     Value:

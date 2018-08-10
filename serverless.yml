@@ -23,3 +23,16 @@ resources:
   - ${file(resources/buckets.yml)}
   - ${file(resources/cloudfront-distributions.yml)}
   - ${file(resources/DNS-config.yml)}
+
+Outputs:
+  StaticWebsiteUploadCommand:
+    Value:
+      Fn::Join:
+        - ""
+        - - "aws s3 sync website/ s3://"
+          - ${self:custom.bn}
+          - " --delete && aws cloudfront create-invalidation --distribution-id "
+          - Ref: RootCloudFront
+          - " --paths '/*' && aws cloudfront create-invalidation --distribution-id "
+          - Ref: RedirectCloudFront
+          - " --paths '/*'"
