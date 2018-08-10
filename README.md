@@ -1,8 +1,8 @@
 # Static Website on AWS with Serverless Framework
-This repository contains infrastructure code for hosting a static website on AWS using Serverless Framework. The website is served using an S3 bucket and cached using cloudfront and it can serve millions of users, without a problem.
+This repository contains infrastructure code for hosting a static website on AWS using Serverless Framework. The website is served using an S3 bucket and cached using cloudfront. This approach doesn't require any servers and can serve millions of users without a problem.
 
 ## Architecture
-Each piece of infrastructure is declared in it's own file in the `/resources` directory. The `serverless.yml` file centralizes all resources, including:
+Each piece of infrastructure is declared in a separate file in the `/resources` directory. The `serverless.yml` file centralizes all resources, including:
 
 - 2 S3 Buckets (1 for the static files, 1 for redirecting `.www`)
 - 2 Cloudfront Distributions (1 for the root, 1 for redirecting `.www`)
@@ -26,15 +26,43 @@ Each piece of infrastructure is declared in it's own file in the `/resources` di
 9. Deploy the infrastructure using `serverless deploy --verbose` and wait until it's finished which should be aprox. 20 min because of cloudfront.
 
 ### Using a different Registrar
-In case you prefer to use a registrar that is not amazon for registering your domain name, steps 4 to 9 still apply but you need to create the hosted zone for your domain manually, which you can do by adding this to the resources on DNS-config.yml:
+In case you prefer to use a registrar that isn't amazon for registering your domain name, steps 4 to 9 still apply but you need to create a hosted zone for your domain manually. You can do that by adding the following to the resources section in `DNS-config.yml`:
 
 ```
+Resources:
+...
+  WsHostedZone:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: ${self:custom.dn}
+```
+Now, instead of using the `dhzId` variable in step 8, refer to the hosted zone you created manually:
+
+```
+Resources:     
+   DNSRecords:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId:
+        Ref: WsHostedZone
+      RecordSets:
+...
 ```
 
-You also need to...
+Declaring the hosted zone will also create `NS` and `SOA` records in Route53. You must use the nameserver addresses in the `NS` record as the nameservers for your domain. This can be done through your registrar's website but the exact procedure varies from registrar to registrar.
 
 ## Usage
-Once all of the infrastructure has been provisioned, any static files you upload to the main website bucket will be served on your domain using https.
+Once all of the infrastructure has been provisioned, any static files you upload to the main website bucket will be served on your domain using https. As a convenience, I've added a `ReactUploadCommand` and a `VanillaUploadCommand` to the stack output, which should be printed in your terminal when you deploy the stack using the `--verbose` flag. These commands will upload the files inside of the `/website` directory to S3. Additionally, Cloudfront's cache will be invalidated so that your users are served the latest version of the site.
+
+The commands should look as follows:
+
+```
+VanillaUploadCommand: aws s3 sync website/ s3://example-bucket-website --delete && aws cloudfront create-invalidation --distribution-id ZZZZZZZZZZZZ --paths '/*' && aws cloudfront create-invalidation --distribution-id XXXXXXXXXXXX --paths '/*'
+
+ReactUploadCommand: (cd ./website && npm run build) && aws s3 sync website/build/ s3://example-bucket-website --delete && aws cloudfront create-invalidation --distribution-id ZZZZZZZZZZZZ --paths '/*' && aws cloudfront create-invalidation --distribution-id XXXXXXXXXXXX --paths '/*'
+```
+
+`ZZZZZZZZZZZZ` and `XXXXXXXXXXXX` are the corresponding cloudfront distribution ids.
 
 
 ## Clean up
