@@ -70,4 +70,4 @@ ReactUploadCommand: (cd ./website && npm run build) && aws s3 sync website/build
 
 
 ## Clean up
-First go to S3 empty both the redirect and website buckets. Then you can use `serverless remove` to clean up all resources provisioned by this project as stated in the serverless framework [documentation](https://serverless.com/framework/docs/providers/aws/guide/quick-start/#cleanup). Alternatively you can delete the stack on cloudformation. Finally, don't forget to delete the domain on Route53.
+First go to S3 empty both the redirect and website buckets. Second, delete the dns record created by Route53 to verify the domain ownership. Then you can use `serverless remove` to clean up all resources provisioned by this project as stated in the serverless framework [documentation](https://serverless.com/framework/docs/providers/aws/guide/quick-start/#cleanup). Alternatively you can delete the stack on cloudformation and then delete the deployment bucket for the project. Finally, don't forget to delete the domain itself on Route53.
